@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Livro</title>
+</head>
+<body>
+    <h1>Detalhes do Livro</h1>
+    <p><strong>Título:</strong> {{ livro.titulo }}</p>
+    <p><strong>Autor:</strong> {{ livro.autor }}</p>
+    <p><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+    <p><Strong>ISBN:</Strong> {{ livro.isbn }}</p>
+
+    <a href="{% url 'lista_livros' %}">Voltar à lista de livros</a>
+    <a href="{% url 'editar_livro' livro.id %}">Editar</a>
+    <a href="{% url 'excluir_livro' livro.id %}">Excluir</a>
+</body>
+</html>

@@ -5,12 +5,43 @@
 </head>
 <body>
     <h1>Lista de Livros</h1>
+
+    <!-- Formulário de Pesquisa -->
+     <form method="GET" action="{% url 'lista_livros' %}">
+        <input type="text" name="q" placeholder="Buscar por título ou autor" value="{{ request.GET.q }}">
+        <button type="submit">Pesquisar</button>
+     </form>
+
     <ul>
         {% for livro in livros %}
-            <li>{{ livro.titulo }} por {{ livro.autor }} ({{ livro.ano_publicacao }}) - ISBN: {{ livro.isbn }}</li>
+            <li>
+                {{ livro.titulo }} por {{ livro.autor }} ({{ livro.ano_publicacao }}) - ISBN: {{ livro.isbn }}
+                <a href="{% url 'detalhes_livro' livro.id %}">Detalhes</a>
+                <a href="{% url 'editar_livro' livro.id %}">Editar</a>
+                <a href="{% url 'excluir_livro' livro.id %}">Excluir</a>    
+            </li>
         {% empty %}
             <li>Não há livros cadastrados.</li>
         {% endfor %}
     </ul>
+
+    <!-- Links de Paginação -->
+     <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.ano %}&ano={{ request.GET.ano}}{% endif %}">Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.ano %}&ano={{ request.GET.ano }}{% endif %}">Anterior</a>
+            {% endif %}
+
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.ano %}&ano={{ request.GET.ano }}{% endif %}">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.ano %}&ano={{ request.GET.ano }}{% endif %}">Última</a>
+            {% endif %}                
+        </span>
+     </div>
+
+    <a href="{% url 'adicionar_livro' %}">Adicionar Novo Livro</a>
 </body>
 </html>

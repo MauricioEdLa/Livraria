@@ -1,0 +1,15 @@
+<!DOCTYPE htmL>
+<html>
+<head>
+    <title>Excluir Livro</title>
+</head>
+<body>
+    <h1>Excluir Livro</h1>
+    <p>Tem certeza de que deseja excluir o livro "{{ livro.titulo }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sim, excluir</button>
+    </form>
+    <a href="{% url 'lista_livros' %}">Cancelar</a>
+</body>
+</html>
